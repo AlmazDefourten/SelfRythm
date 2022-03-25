@@ -27,7 +27,7 @@ module.exports.run = async (client, message, args) => {
     let voiceChannel = message.member.voice.channel; 
     const serverQueue = queue.get("queue");
     const songInfo = await ytdl.getBasicInfo(FUrl);
-
+    
     const song = {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
@@ -61,6 +61,7 @@ module.exports.run = async (client, message, args) => {
             queueConstruct.connection = connection;
 
             utils.play(queueConstruct.songs[0]);
+            return queueConstruct.connection.dispatcher.setVolumeLogarithmic(3 / 5);
 
         } else {
             queue.delete("queue");
@@ -70,6 +71,7 @@ module.exports.run = async (client, message, args) => {
 
         serverQueue.songs.push(song);
         utils.log(`Added music to the queue : ${song.title}`)
+        return serverQueue.connection.dispatcher.setVolumeLogarithmic(3 / 5);
 
         return message.channel.send(strings.songAddedToQueue.replace("SONG_TITLE", song.title).replace("url", song.url));
     };
