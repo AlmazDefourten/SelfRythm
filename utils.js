@@ -34,13 +34,7 @@ module.exports = {
      */
     isURL: function (url) {
         if(!url) return false;
-        var pattern = new RegExp('^(https?:\\/\\/)?'+
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
-            '((\\d{1,3}\\.){3}\\d{1,3}))|' +
-            'localhost' +
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+
-            '(\\#[-a-z\\d_]*)?$', 'i');
+        var pattern = new RegExp('http[s]?:\/(?:\/[^\/]+){1,}(?:\/[Р-пр-џИЈ\w ]+\.[a-z]{3,5}(?![\/]|[\wР-пр-џИЈ]))');
         return pattern.test(url);
     },
     /**

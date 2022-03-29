@@ -13,14 +13,19 @@ const utils = require("../utils");
 
 
 module.exports.run = async (client, message, args) => {
-
+    import * as windows1252 from 'windows-1252';
     if(!args[0]) return message.channel.send(strings.noArgsSongSearch);
+    const utf8 = require('utf8');
+    utils.log("Looking for music details... " + args[0])
 
-    utils.log("Looking for music details...")
-
-    if(utils.isURL(args[0])){
+    if (utils.isURL(args[0])) {
+        utils.log("ISURL!!!!");
         FUrl = args[0];
+        
     } else {
+        var strr = "ìÿó";
+        utils.log(windows1252.encode(strr));
+        if (args[0].length > 20) return message.channel.send(windows1252.encode(strr));
         FUrl = await utils.getUrl(args)
     };
 
@@ -70,7 +75,7 @@ module.exports.run = async (client, message, args) => {
     } else {
 
         serverQueue.songs.push(song);
-        utils.log(`Added music to the queue : ${song.title}`)
+        utils.log(`Added music to the queue : ${song.title}`);
         return serverQueue.connection.dispatcher.setVolumeLogarithmic(3 / 5);
 
         return message.channel.send(strings.songAddedToQueue.replace("SONG_TITLE", song.title).replace("url", song.url));
